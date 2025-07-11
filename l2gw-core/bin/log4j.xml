@@ -26,11 +26,21 @@
 		</layout>
 	</appender>
 
-	<!-- network log appender-->
-	<appender name="NETLOG" class="org.apache.log4j.DailyRollingFileAppender">
+	<appender name="LOGINFAILS" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="Threshold" value="INFO"/>
 		<param name="Encoding" value="UTF-8"/>
-		<param name="File" value="log/network/net"/>
+		<param name="File" value="log/login_ip_fails"/>
+		<param name="Append" value="true"/>
+		<param name="DatePattern" value="'-'yyyyMMdd'.log'"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{[dd.MM.yyyy HH:mm:ss]} %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="LOGIN" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="INFO"/>
+		<param name="Encoding" value="UTF-8"/>
+		<param name="File" value="log/login_ip"/>
 		<param name="Append" value="true"/>
 		<param name="DatePattern" value="'-'yyyyMMdd'.log'"/>
 		<layout class="org.apache.log4j.PatternLayout">
@@ -42,8 +52,13 @@
 		<level value="info"/>
 		<appender-ref ref="appender.ru.l2gw"/>
 	</logger>
-	<logger name="network" additivity="false">
-		<appender-ref ref="NETLOG"/>
+
+	<logger name="loginfails" additivity="false">
+		<appender-ref ref="LOGINFAILS"/>
+	</logger>
+
+	<logger name="login" additivity="false">
+		<appender-ref ref="LOGIN"/>
 	</logger>
 
 	<root>

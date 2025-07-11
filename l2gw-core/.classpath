@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-23"/>
-	<classpathentry kind="src" path="highfive/commons/java"/>
-	<classpathentry kind="src" path="highfive/fakeserver/java"/>
-	<classpathentry kind="src" path="highfive/fakeserver/test"/>
-	<classpathentry kind="src" path="highfive/gameserver/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="highfive/loginserver/java"/>
-	<classpathentry kind="lib" path="highfive/build/dist/gameserver/l2server.jar"/>
-	<classpathentry kind="lib" path="highfive/build/l2server.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/commons-dbcp-1.4.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/commons-io-2.1.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/commons-l2gw.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/commons-lang3-3.1.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/commons-pool-1.6.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/javolution-5.5.1.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/mysql-connector-java-5.1.14-bin.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/netty-3.2.3.jar"/>
-	<classpathentry kind="lib" path="highfive/lib/trove-3.0.2.jar"/>
+	<classpathentry kind="src" path="highfive/gameserver/java"/>
+	<classpathentry kind="src" path="highfive/fakeserver/test"/>
+	<classpathentry kind="src" path="highfive/fakeserver/java"/>
+	<classpathentry kind="src" path="highfive/commons/java"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/build/dist/gameserver/l2server.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/build/l2server.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/commons-io-2.1.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/commons-l2gw.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/javolution-5.5.1.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/mysql-connector-java-5.1.14-bin.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/netty-3.2.3.jar"/>
+	<classpathentry kind="lib" path="c:/server/play4free/source/l2gw-core/highfive/lib/trove-3.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
