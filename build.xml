@@ -1,0 +1,21 @@
+<project name="FullBuild" default="build-all">
+  <target name="build-all" depends="build-core, build-dp, build-scripts"/>
+  
+  <target name="build-core">
+    <ant antfile="build.xml" dir="l2gw-core/highfive" target="jar"/>
+  </target>
+  
+  <target name="build-dp">
+    <ant antfile="build.xml" dir="l2gw-dp/highfive" target="dist"/>
+  </target>
+  
+  <target name="build-scripts">
+    <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="dist"/>
+  </target>
+  
+  <target name="clean-all">
+    <ant antfile="build.xml" dir="l2gw-core/highfive" target="clean"/>
+    <ant antfile="build.xml" dir="l2gw-dp/highfive" target="clean"/>
+    <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="clean"/>
+  </target>
+</project>
