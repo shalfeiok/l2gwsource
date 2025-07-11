@@ -1,21 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="FullBuild" default="build-all">
-  <target name="build-all" depends="build-core, build-dp, build-scripts"/>
+  <description>Full project build script</description>
+  
+  <property name="master.dist.dir" location="dist"/>
+  
+  <target name="init">
+    <mkdir dir="${master.dist.dir}"/>
+    <echo message="Created master dist directory: ${master.dist.dir}"/>
+  </target>
+
+  <target name="build-all" depends="init, build-core, build-dp, build-scripts">
+    <echo message="All components built successfully!"/>
+  </target>
   
   <target name="build-core">
-    <ant antfile="build.xml" dir="l2gw-core/highfive" target="jar"/>
+    <ant antfile="build.xml" dir="l2gw-core/highfive" target="dist">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
   </target>
   
   <target name="build-dp">
-    <ant antfile="build.xml" dir="l2gw-dp/highfive" target="dist"/>
+    <ant antfile="build.xml" dir="l2gw-dp/highfive" target="dist">
+      <property name="dist.dir" value="${master.dist.dir}/dp"/>
+    </ant>
   </target>
   
   <target name="build-scripts">
-    <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="dist"/>
+    <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="dist">
+      <property name="dist.dir" value="${master.dist.dir}/scripts"/>
+    </ant>
   </target>
   
   <target name="clean-all">
+    <delete dir="${master.dist.dir}"/>
     <ant antfile="build.xml" dir="l2gw-core/highfive" target="clean"/>
     <ant antfile="build.xml" dir="l2gw-dp/highfive" target="clean"/>
     <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="clean"/>
+    <echo message="Cleaned all build artifacts"/>
   </target>
 </project>
