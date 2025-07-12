@@ -106,6 +106,8 @@ public class SevenSigns
 	private Map<Integer, Integer> _signsDuskSealTotals;
 	private Map<Integer, Integer> _signsDawnSealTotals;
 
+	
+
 	public SevenSigns()
 	{
 		_signsPlayerData = new FastMap<Integer, StatsSet>();
