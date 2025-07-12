@@ -3,7 +3,7 @@ CREATE TABLE `banned_locations` (
   `loc_id` int(9) NOT NULL default '0',
   `banned_loc_id` int(9) NOT NULL default '0',
   PRIMARY KEY  (`loc_id`,`banned_loc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `banned_locations` VALUES 
 (86004,86051),

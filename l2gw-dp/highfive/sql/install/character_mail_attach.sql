@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS `character_mail_attach` (
   `item_obj_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`attach_id`,`item_obj_id`),
   KEY `attach_id` (`attach_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

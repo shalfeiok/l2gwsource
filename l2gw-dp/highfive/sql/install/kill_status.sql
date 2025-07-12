@@ -7,4 +7,4 @@ CREATE TABLE `kill_status` (
 `respawn_time` int(11) default 0,
 PRIMARY KEY(`spawn_id`),
 INDEX(`npc_templateid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

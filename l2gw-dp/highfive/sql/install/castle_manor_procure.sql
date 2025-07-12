@@ -8,4 +8,4 @@ CREATE TABLE `castle_manor_procure` (
 `reward_type` int(11) NOT NULL DEFAULT '0',
 `period` INT NOT NULL DEFAULT '1',
 PRIMARY KEY  (`castle_id`,`crop_id`,`period`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

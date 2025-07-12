@@ -11,4 +11,4 @@ CREATE TABLE `product_buylog` (
   `buy_date` datetime NOT NULL,
 PRIMARY KEY(`job_Id`),
 INDEX(`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

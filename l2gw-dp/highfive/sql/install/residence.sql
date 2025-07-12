@@ -25,7 +25,7 @@ CREATE TABLE `residence` (
   `castleId` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`,`name`),
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `residence` VALUES (1, 'Gludio', 0, '', 'Gludio', '0', '0', 0, 0, 0, 'Auction', 0, 1262451600, 0, 0, 0, 0, 0, 0, 'false', 0, 'Castle', 0),
 (2, 'Dion', 0, '', 'Dion', '0', '0', 0, 0, 0, 'Auction', 0, 1262451600, 0, 0, 0, 0, 0, 0, 'false', 0, 'Castle', 0),

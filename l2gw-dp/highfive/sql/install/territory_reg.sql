@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS `territory_reg` (
   `object_id` int(11) NOT NULL default '0',
   `reg_type` int(1) NOT NULL default '0',
   PRIMARY KEY  (`territory_id`,`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+) ENGINE=MyISAM DEFAULT CHARSET=UTF8;

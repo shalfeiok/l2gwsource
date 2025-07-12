@@ -7,4 +7,4 @@ expelled_member INT UNSIGNED NOT NULL DEFAULT 0,
 crest VARBINARY(192) NULL DEFAULT NULL,
 PRIMARY KEY  (ally_id),
 KEY `leader_id` (`leader_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

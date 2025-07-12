@@ -38,7 +38,7 @@ CREATE TABLE `char_templates` (
   `items7` int(10) NOT NULL default '0',
   `safeFall` int(4) NOT NULL default '0',
   PRIMARY KEY  (`ClassId`,`sex`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `char_templates` VALUES 
 (0,0,'Human Fighter',0,40,43,30,21,11,25,4,72,3,47,300,213,33,4,33,115,80,-71338,258271,-3104,0,'1.10','1.188000','9.0','23.0',1147,1146,10,2369,5588,10650,12753,250),

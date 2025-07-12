@@ -11,4 +11,4 @@ CREATE TABLE `olymp_nobles` (
   `ncb_matches` int NOT NULL default 0,
   `team_matches` int NOT NULL default 0,
   PRIMARY KEY  (`char_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -13,4 +13,4 @@ KEY `name` (`name`),
 KEY `index` (`index`),
 KEY `value` (`value`),
 KEY `expire_time` (`expire_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -5,4 +5,4 @@ clan_id INT NOT NULL default 0,
 bid bigint(20) NOT NULL default 0,
 bid_time decimal(20,0) NOT NULL default '0',
 PRIMARY KEY  (`agit_id`, `clan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

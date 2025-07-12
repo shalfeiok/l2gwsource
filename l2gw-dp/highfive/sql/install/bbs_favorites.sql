@@ -7,5 +7,5 @@ CREATE TABLE `bbs_favorites` (
 `add_date` INT(15) UNSIGNED NOT NULL,
 PRIMARY KEY(`fav_id`),
 INDEX(`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ALTER TABLE bbs_favorites ADD UNIQUE INDEX ix_obj_id_bypass (object_id, fav_bypass);

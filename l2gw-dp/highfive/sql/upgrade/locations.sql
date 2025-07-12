@@ -9,7 +9,7 @@ CREATE TABLE `locations` (
   `loc_zmax` int(9) NOT NULL default '0',
   PRIMARY KEY  (`loc_id`,`loc_x`,`loc_y`),
   KEY (`ordr`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `locations` (`loc_id`, `name`, `loc_x`, `loc_y`, `loc_zmin`, `loc_zmax`) VALUES 
 (13,'partisan_agit_2121_01',42988,109652,-2032,-1032),

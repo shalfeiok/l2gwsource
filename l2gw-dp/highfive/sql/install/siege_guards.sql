@@ -11,4 +11,4 @@ CREATE TABLE `siege_guards` (
 `isHired` int(11) NOT NULL default '1',
 PRIMARY KEY(`id`),
 KEY `id` (`unitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

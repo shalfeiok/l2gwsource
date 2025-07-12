@@ -11,4 +11,4 @@ CREATE TABLE `character_summons` (
 `item_delay` INT NOT NULL,
 `penalty` FLOAT NOT NULL,
 PRIMARY KEY(`char_obj_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

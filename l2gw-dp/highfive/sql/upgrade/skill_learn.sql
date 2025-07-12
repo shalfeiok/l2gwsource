@@ -6,7 +6,7 @@ CREATE TABLE `skill_learn` (
   `npc_id` int(11) NOT NULL DEFAULT '0',
   `class_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`npc_id`,`class_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- -----------------------------
 -- Records for table skill_learn
 -- -----------------------------

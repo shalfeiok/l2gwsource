@@ -11,4 +11,4 @@ CREATE TABLE `item_auction` (
 `prev_item_id` int(11) NOT NULL,
 `prev_bid` bigint(20) NOT NULL,
 PRIMARY KEY  (`auction_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

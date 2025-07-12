@@ -8,7 +8,7 @@ CREATE TABLE `forums` (
 `forum_perm` int(8) NOT NULL default '0',
 `forum_owner_id` int(8) NOT NULL default '0',
 UNIQUE KEY `forum_id` (`forum_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `forums` VALUES
 (1, 'NormalRoot', 0, 0, 0, 1, 0),

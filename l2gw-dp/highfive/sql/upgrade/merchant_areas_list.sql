@@ -5,7 +5,7 @@ CREATE TABLE `merchant_areas_list` (
   `tax` double(3,2) unsigned NOT NULL default '0.00',
   `Chaotic` int(11) NOT NULL default '0',
   PRIMARY KEY  (`merchant_area_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 insert  into merchant_areas_list values 
 (1,'Starter Town','0.15',0),

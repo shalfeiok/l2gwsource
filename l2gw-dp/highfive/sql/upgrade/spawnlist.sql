@@ -23,7 +23,7 @@ CREATE TABLE `spawnlist` (
   PRIMARY KEY (`spawn_id`),
   UNIQUE KEY `npc_templateid` (`npc_templateid`,`locx`,`locy`,`locz`,`loc_id`,`event_name`),
   KEY `key_npc_templateid` (`npc_templateid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `spawnlist` (`location`,`count`,`npc_templateid`,`locx`,`locy`,`locz`,`randomx`,`randomy`,`heading`,`respawn_delay`,`respawn_random`,`loc_id`,`last_editor`,`last_changed`,`ai`,`ai_parameters`,`event_name`,`spawn_time`,`periodOfDay`) VALUES 
 ('lyonn09_1914_23',6,21119,0,0,0,0,0,0,15,0,1879,'ic','2009-05-04',NULL,NULL,NULL,'0',0),

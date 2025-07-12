@@ -15,7 +15,8 @@ insert into locations values
 (80013,'peace_giran_harbor_alt',44192,194099,-5000,-1500),
 (80013,'peace_giran_harbor_alt',41824,188576,-5000,-1500);
 insert into zone set id=500023, name='[peace_giran_harbor_altr]', type='peace_zone', loc_id=80013;
-#неторговая зона в Гиран Харборе возле ГК
+
+#Неторговая зона в Гиран Харборе возле ГК
 insert into locations values
 (80014,'Giran_Harbor_nontrade',47987,186956,-5000,-1500),
 (80014,'Giran_Harbor_nontrade',47842,186720,-5000,-1500),

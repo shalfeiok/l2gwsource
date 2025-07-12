@@ -5,4 +5,4 @@ CREATE TABLE `character_hennas` (
 `slot` INT NOT NULL DEFAULT 0,
 `class_index` SMALLINT(3) NOT NULL DEFAULT 0,
 INDEX (`char_obj_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

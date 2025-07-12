@@ -8,4 +8,4 @@ crest VARBINARY(8192) NULL DEFAULT NULL,
 PRIMARY KEY (pledge_id),
 KEY `crest_id` (`crest_id`),
 KEY `ally_id` (`ally_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

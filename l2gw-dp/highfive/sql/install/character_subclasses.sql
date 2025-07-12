@@ -16,4 +16,4 @@ CREATE TABLE `character_subclasses` (
 `death_penalty` tinyint(1) NOT NULL default '0',
 `slot` INT(1) NOT NULL default '0',
 PRIMARY KEY  (`char_obj_id`,`class_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

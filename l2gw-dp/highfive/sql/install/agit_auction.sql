@@ -7,4 +7,4 @@ deposit bigint(20) NOT NULL default '0',
 description varchar(150) NOT NULL default '',
 end_date decimal(20,0) NOT NULL default '0',
 PRIMARY KEY  (`agit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

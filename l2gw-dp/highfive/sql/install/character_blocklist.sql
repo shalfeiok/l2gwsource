@@ -4,4 +4,4 @@ CREATE TABLE `character_blocklist` (
 `target_Id` int(10) NOT NULL,
 `target_Name` varchar(35) NOT NULL,
 PRIMARY KEY(`obj_Id`,`target_Id`,`target_Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -5,4 +5,4 @@ CREATE TABLE `event_mog_skills` (
   `class_id` int(11) NOT NULL,
   UNIQUE KEY `myind` (`owner_id`,`skill_id`,`class_id`),
   KEY `owner_id` (`owner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

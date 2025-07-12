@@ -7,4 +7,4 @@ CREATE TABLE `col_market` (
   PRIMARY KEY (`pos_id`),
   UNIQUE INDEX (`object_id`),
   INDEX (`pos_date`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;

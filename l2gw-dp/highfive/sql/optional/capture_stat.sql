@@ -12,4 +12,4 @@
   `flag_attack` int(11) NOT NULL DEFAULT '0',
   `heal_amount` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`object_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

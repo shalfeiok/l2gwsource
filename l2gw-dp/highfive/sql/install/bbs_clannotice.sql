@@ -4,4 +4,4 @@ CREATE TABLE `bbs_clannotice` (
 `type` SMALLINT NOT NULL DEFAULT '0',
 `notice` text NOT NULL,
 PRIMARY KEY(`clan_id`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

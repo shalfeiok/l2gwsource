@@ -14,4 +14,4 @@ CREATE TABLE `seven_signs` (
 `dusk_ancient_adena_amount` INT NOT NULL default '0',
 `dusk_contribution_score` INT NOT NULL default '0',
 PRIMARY KEY(`char_obj_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

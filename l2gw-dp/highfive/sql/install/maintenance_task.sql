@@ -10,4 +10,4 @@ CREATE TABLE `maintenance_task` (
 PRIMARY KEY (id),
 KEY `key_task_time` (`datetime`),
 UNIQUE `key_name_param` (`name`, `param`)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+) ENGINE=MyISAM DEFAULT CHARSET=UTF8;

@@ -7,4 +7,4 @@ CREATE TABLE `character_summons_effects` (
 `duration` INT NOT NULL DEFAULT '0',
 `order` INT NOT NULL DEFAULT '0',
 PRIMARY KEY(`char_obj_id`, `npc_id`, `skill_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

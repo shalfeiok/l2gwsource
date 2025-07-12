@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS `character_tpbookmark` (
   `y` int NOT NULL,
   `z` int NOT NULL,
   PRIMARY KEY (`char_obj_id`,`slot`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

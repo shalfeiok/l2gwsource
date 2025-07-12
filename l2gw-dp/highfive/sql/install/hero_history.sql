@@ -8,4 +8,4 @@ CREATE TABLE `hero_history` (
   `active` decimal(1,0) NOT NULL default '0',
   `message` varchar(100) default NULL,
   UNIQUE KEY `char_id` (`char_id`,`mons`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -9,4 +9,4 @@ CREATE TABLE `tournament_teams` (
 `wins` int(11) NOT NULL default '0',
 `losts` int(11) NOT NULL default '0',
 `status` int(11) NOT NULL default '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

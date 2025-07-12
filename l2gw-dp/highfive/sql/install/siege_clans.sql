@@ -5,4 +5,4 @@ clan_id int(11) NOT NULL default 0,
 type int(1) default NULL,
 castle_owner int(1) default NULL,
 PRIMARY KEY(clan_id,unit_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

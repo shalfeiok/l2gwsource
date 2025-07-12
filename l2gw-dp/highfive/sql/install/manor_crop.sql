@@ -9,7 +9,7 @@ CREATE TABLE `manor_crop` (
 `left` int(11) NOT NULL default '0',
 `reward_type` int(1) NOT NULL default '0',
 PRIMARY KEY(`castle_id`,`crop_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE `manor_crop` VALUES
 (1,5650,0,0,0,0,0,0),

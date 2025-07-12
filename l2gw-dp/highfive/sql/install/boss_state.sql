@@ -4,7 +4,7 @@ CREATE TABLE `boss_state` (
   `respawnDate` decimal(20,0) NOT NULL,
   `state` enum('NOTSPAWN', 'ALIVE', 'DEAD') NOT NULL DEFAULT 'NOTSPAWN',
   PRIMARY KEY  (`bossId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO boss_state VALUES(29019, 0, 'NOTSPAWN'); -- Antharas
 INSERT INTO boss_state VALUES(29020, 0, 'NOTSPAWN'); -- Baium

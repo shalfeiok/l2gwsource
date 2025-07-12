@@ -7,4 +7,4 @@ CREATE TABLE `couples` (
 `affiancedDate` decimal(20,0) default '0',
 `weddingDate` decimal(20,0) default '0',
 PRIMARY KEY(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

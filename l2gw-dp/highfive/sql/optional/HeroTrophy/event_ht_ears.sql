@@ -6,4 +6,4 @@ CREATE TABLE `event_ht_ears` (
   `left` boolean NOT NULL,
   KEY `owner_id` (`owner_id`),
   KEY `kill_time` (`kill_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

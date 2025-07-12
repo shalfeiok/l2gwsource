@@ -11,7 +11,7 @@ CREATE TABLE `siege_guards` (
   `isHired` int NOT NULL default 1,
   PRIMARY KEY  (`id`),
   KEY `id` (`unitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `siege_guards` (`unitId`,`npcId`,`x`,`y`,`z`,`heading`,`respawnDelay`,`isHired`) VALUES 
 -- gludio siege guards spawns

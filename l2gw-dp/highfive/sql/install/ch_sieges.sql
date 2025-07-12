@@ -5,4 +5,4 @@ CREATE TABLE `ch_sieges` (
 `lastSiegeDate` int(11) NOT NULL default '0',
 `siegeDate` int(11) NOT NULL default '0',
 PRIMARY KEY(`ch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

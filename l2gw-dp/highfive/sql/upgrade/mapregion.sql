@@ -19,7 +19,7 @@ CREATE TABLE `mapregion` (
   `x26` int(2) NOT NULL default '0',
 
   PRIMARY KEY  (`y10_plus`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;
 
 INSERT INTO `mapregion` VALUES
 (0,21,21,21,21,4,4,4,8,10,12,5,5,5,5,5,5),

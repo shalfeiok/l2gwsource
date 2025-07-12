@@ -9,4 +9,4 @@ CREATE TABLE `respawn` (
 `z` int(11) default 0,
 PRIMARY KEY(`dbname`),
 INDEX(`dbname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

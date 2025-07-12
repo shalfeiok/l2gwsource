@@ -69,7 +69,7 @@ CREATE TABLE `npc` (
   `show_name_tag` tinyint(1) NOT NULL DEFAULT '1',
   `unsowing` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `npc` VALUES
 (100,'Thomas D. Turkey','','25.00','35.00',80,'male','L2Monster','BRTurkey',40,680,1.00000,0.000,2000,0.900,40,43,30,21,20,20,0,0,8.47458,60000,5.78704,200000,253,0,333,0,0,0,20,160,'',1000,0,0,0,7,50,1,9.00,0,0.00,0.60,'false','NONE',NULL,0,0,-2,0,20,20,20,20,20,20,0,1,1,0,0,1,1,1),

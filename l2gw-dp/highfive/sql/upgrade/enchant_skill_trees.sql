@@ -7,7 +7,7 @@ CREATE TABLE `enchant_skill_trees` (
   `enchant_type` varchar(25) default NULL,
   `min_skill_lvl` int(2) NOT NULL default '0',
   PRIMARY KEY  (`skill_id`,`level`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `enchant_skill_trees` (`skill_id`,`level`,`name`,`base_lvl`,`enchant_type`,`min_skill_lvl`) VALUES
 (1,101,'Triple Slash',37,'+1 Power',37),

@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `lottery` (
   `enddate` decimal(20,0) NOT NULL default 0,
   `finished` INT NOT NULL default 0,
   PRIMARY KEY (`id`,`idnr`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;

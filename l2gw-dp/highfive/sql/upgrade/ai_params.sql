@@ -4,7 +4,7 @@ CREATE TABLE `ai_params` (
   `param` varchar(25) NOT NULL DEFAULT '',
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`npc_id`,`param`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `ai_params` VALUES 
 (30080,'[fnHi]','clavier001.htm'),

@@ -9,4 +9,4 @@ CREATE TABLE `bbs_memo` (
 `post_date` INT(15) UNSIGNED NOT NULL,
 PRIMARY KEY(`memo_id`),
 INDEX(account_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

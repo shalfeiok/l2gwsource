@@ -35,7 +35,7 @@ CREATE TABLE `armor` (
   `is_sealed` tinyint(1) NOT NULL DEFAULT '0',
   `is_common` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `armor` VALUES
 (21,'Shirt','','armor','chest','light',4830,'none',0.00,-1,0,36,1,0,113,0,'icon.armor_t02_u_i00',1,1,1,0,0,7,'0-0;','0-0;',0,0,1,0,-1,0,0,0,0),

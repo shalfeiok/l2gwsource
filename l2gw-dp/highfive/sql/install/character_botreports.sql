@@ -4,4 +4,4 @@ CREATE TABLE `character_botreports` (
 `bot_id` int(11) NOT NULL default '0',
 `exp_time` int UNSIGNED NOT NULL default '0',
 PRIMARY KEY(`char_id`,`bot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

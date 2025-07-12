@@ -8,4 +8,4 @@ CREATE TABLE `character_macroses` (
 `acronym` VARCHAR(4) ,
 `commands` VARCHAR(255) ,
 PRIMARY KEY(`char_obj_id`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
