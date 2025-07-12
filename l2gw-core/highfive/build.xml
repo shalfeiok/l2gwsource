@@ -75,8 +75,8 @@
     <javac destdir="${build.gameserver}"
            optimize="off"
            debug="on"
-           source="8"
-           target="8"
+           source="1.7"
+           target="1.7"
            encoding="UTF-8"
            nowarn="off">
       <compilerarg value="-Xlint:all"/>
@@ -89,8 +89,8 @@
     <javac destdir="${build.commons}"
            optimize="off"
            debug="on"
-           source="8"
-           target="8"
+           source="1.7"
+           target="1.7"
            encoding="UTF-8"
            nowarn="off">
       <compilerarg value="-Xlint:all"/>
@@ -103,8 +103,8 @@
     <javac destdir="${build.loginserver}"
            optimize="off"
            debug="on"
-           source="8"
-           target="8"
+           source="1.7"
+           target="1.7"
            encoding="UTF-8"
            nowarn="off">
       <compilerarg value="-Xlint:all"/>
@@ -117,8 +117,8 @@
     <javac destdir="${build.fakeserver}"
            optimize="off"
            debug="on"
-           source="8"
-           target="8"
+           source="1.7"
+           target="1.7"
            encoding="UTF-8"
            nowarn="off">
       <compilerarg value="-Xlint:all"/>
@@ -131,8 +131,8 @@
     <javac destdir="${build.gameserver}"
            optimize="off"
            debug="on"
-           source="8"
-           target="8"
+           source="1.7"
+           target="1.7"
            encoding="UTF-8"
            nowarn="off">
       <compilerarg value="-Xlint:all"/>
