@@ -481,18 +481,16 @@ public class MightOfGods extends Functions implements ScriptFile, ICommunityBoar
 
 					if(c > MAX_SKILLS_IN_GROUP)
 					{
-						_log.warn("Event 'Might of Gods': cheater found: " + player + " got skill: " + SkillTable.getInstance().getInfo(rset.getInt("skill_id"), rset.getInt("skill_lvl")) + " removed.");
-
-						PreparedStatement st2 = con.prepareStatement("DELETE FROM event_mog_skills WHERE owner_id=? and class_id=? and skill_id=?");
-						st2.setInt(1, player.getObjectId());
-						st2.setInt(2, player.getActiveClass());
-						st2.setInt(3, rset.getInt("skill_id"));
-						st2.execute();
-
-						DbUtils.closeQuietly(st2);
+						_log.error("Event 'Might of Gods': player " + player + " has more than " + MAX_SKILLS_IN_GROUP + " skills in group " + rset.getInt("event_group") + ". Skipping skill: " + SkillTable.getInstance().getInfo(rset.getInt("skill_id"), rset.getInt("skill_lvl")));
+						continue;
 					}
-					else
-						player.addSkill(SkillTable.getInstance().getInfo(rset.getInt("skill_id"), rset.getInt("skill_lvl")), false);
+					
+					L2Skill skill = SkillTable.getInstance().getInfo(rset.getInt("skill_id"), rset.getInt("skill_lvl"));
+					if(skill != null) {
+						player.addSkill(skill, false);
+					} else {
+						_log.error("Invalid MoG skill: " + rset.getInt("skill_id") + "-" + rset.getInt("skill_lvl") + " for " + player);
+					}
 
 					count.put(rset.getInt("event_group"), c);
 				}
@@ -670,16 +668,27 @@ public class MightOfGods extends Functions implements ScriptFile, ICommunityBoar
 
             while(rs.next())
             {
-                _log.debug("check existing skill: " + rs.getInt("skill_id") + " level: " + player.getSkillLevel(rs.getInt("skill_id")));
-                if(player.getSkillLevel(rs.getInt("skill_id")) > 0)
+                int skillId = rs.getInt("skill_id");
+                int skillLvl = rs.getInt("skill_lvl");
+                _log.debug("check existing skill: " + skillId + " level: " + player.getSkillLevel(skillId));
+                
+                // Проверяем, есть ли у игрока этот скилл
+                if(player.getSkillLevel(skillId) > 0)
                     continue;
 
                 StatsSet info = new StatsSet();
                 info.set("id", rs.getInt("id"));
-                info.set("skill", rs.getInt("skill_id") + "-" + rs.getInt("skill_lvl"));
+                info.set("skill_id", skillId);
+                info.set("skill_lvl", skillLvl);
                 info.set("chance", rs.getInt("probability"));
                 skills.add(info);
                 sum += rs.getInt("probability");
+            }
+
+            // Проверка на нулевую сумму вероятностей
+            if(sum <= 0) {
+                sendMessage("Нет доступных скиллов для изучения", player);
+                return false;
             }
 
             double k = 100 / sum;
@@ -700,13 +709,29 @@ public class MightOfGods extends Functions implements ScriptFile, ICommunityBoar
             double chance = Rnd.get(100);
             _log.debug("Start chance: " + chance);
 
-            while(skills.size() > 0)
+            while(!skills.isEmpty())
             {
-                StatsSet info = skills.remove(Rnd.get(skills.size()));
-                _log.debug("try skill: " + info.getSkill("skill").getName() + " chance: " + chance + " skill chance: " + (info.getInteger("chance") * k));
+                if(skills.isEmpty()) {
+                    sendMessage("В этот раз Боги не наградили Вас своей силой. Попробуйте еще раз!", player);
+                    return false;
+                }
+                
+                int index = Rnd.get(skills.size());
+                StatsSet info = skills.get(index);
+                skills.remove(index);
+                
+                int skillId = info.getInteger("skill_id");
+                int skillLvl = info.getInteger("skill_lvl");
+                L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLvl);
+                
+                if(skill == null) {
+                    _log.error("MoG: Skill not found: " + skillId + "-" + skillLvl + " for group " + skillGroup);
+                    continue;
+                }
+                
+                _log.debug("try skill: " + skill.getName() + " chance: " + chance + " skill chance: " + (info.getInteger("chance") * k));
                 if(chance < info.getInteger("chance") * k)
                 {
-                    L2Skill skill = info.getSkill("skill");
                     st = con.prepareStatement("INSERT INTO event_mog_skills (owner_id,skill_id,skill_lvl,class_id) VALUES (?,?,?,?)");
                     st.setInt(1, player.getObjectId());
                     st.setInt(2, skill.getId());
@@ -726,7 +751,7 @@ public class MightOfGods extends Functions implements ScriptFile, ICommunityBoar
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            _log.error("Error in addEventSkill: " + e, e);
         }
         finally
         {
@@ -776,7 +801,7 @@ public class MightOfGods extends Functions implements ScriptFile, ICommunityBoar
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            _log.error("Error in deleteEventSkills: " + e, e);
         }
         finally
         {
@@ -799,6 +824,12 @@ public class MightOfGods extends Functions implements ScriptFile, ICommunityBoar
         {
             player.sendPacket(Msg.YOUR_INVENTORY_IS_FULL);
             player.sendPacket(new SystemMessage(SystemMessage.S1_CANNOT_BE_USED_DUE_TO_UNSUITABLE_TERMS).addItemName(item.getItemId()));
+            return false;
+        }
+        
+        // Добавляем проверку на олимпиаду
+        if(player.isInOlympiadMode()) {
+            player.sendMessage("Вы не можете использовать этот предмет на Олимпиаде.");
             return false;
         }
 
