@@ -4,7 +4,7 @@ CREATE TABLE `siege_door` (
   `id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `id` (`unitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `siege_door` VALUES
 (1,19210001),

@@ -5,4 +5,4 @@ CREATE TABLE `siege_reinforce` (
   `level` int(11) NOT NULL default '0',
   PRIMARY KEY  (`siegeUnitId`, `reinforceId`),
   KEY `siegeUnitId` (`siegeUnitId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

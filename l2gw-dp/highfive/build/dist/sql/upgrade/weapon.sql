@@ -45,7 +45,7 @@ CREATE TABLE `weapon` (
   `is_pvp` tinyint(1) NOT NULL DEFAULT '0',
   `is_common` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `weapon` VALUES
 (1,'Short Sword','','weapon','rhand',1600,1,1,'none',8,10,'sword',8.00,0.00,0.00,0,0,379,40,0,6,-1,0,590,0,'icon.weapon_small_sword_i00',1,1,1,0,0,7,'0-0;','0-0;',0,0,1,0,-1,0,0,0,0,0),

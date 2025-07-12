@@ -5,7 +5,7 @@ CREATE TABLE `clan_wars` (
 `wantspeace1` decimal(2,0) NOT NULL default '0',
 `wantspeace2` decimal(2,0) NOT NULL default '0',
 `type` INT NOT NULL default '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 

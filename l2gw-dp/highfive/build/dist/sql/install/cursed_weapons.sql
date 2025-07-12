@@ -10,5 +10,5 @@ CREATE TABLE `cursed_weapons` (
 `z` int(11) NOT NULL default '0',
 `end_time` INT UNSIGNED NOT NULL DEFAULT 0,
 PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

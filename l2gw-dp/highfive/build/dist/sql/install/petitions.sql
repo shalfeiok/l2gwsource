@@ -15,4 +15,4 @@ KEY `actor` (`actor`),
 KEY `petition_status` (`petition_status`),
 KEY `petition_type` (`petition_type`),
 KEY `serv_id` (`serv_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

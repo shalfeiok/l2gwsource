@@ -28,4 +28,4 @@ STR_actor_account varchar(50),
 STR_target varchar(50),
 STR_target_account varchar(50),
 item_id int unsigned
-) ENGINE=ARCHIVE;
+) ENGINE=MyISAM;

@@ -6,4 +6,4 @@ CREATE TABLE `field_cycle` (
 `step_changed_time` int NOT NULL,
 `point_changed_time` int NOT NULL,
 PRIMARY KEY(`field_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

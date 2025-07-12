@@ -8,4 +8,4 @@ CREATE TABLE `topic` (
 `topic_ownerid` int(8) NOT NULL default '0',
 `topic_type` int(8) NOT NULL default '0',
 `topic_reply` int(8) NOT NULL default '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -3,7 +3,7 @@ CREATE TABLE `tournament_class_list` (
   `class_name` varchar(19) NOT NULL default '',
   `class_id` int(10) unsigned NOT NULL default '0',
   `type` int(11) NOT NULL default '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `tournament_class_list` VALUES
 ('Fighter',0,1),

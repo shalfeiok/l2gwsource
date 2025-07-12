@@ -8,7 +8,7 @@ CREATE TABLE `recipes` (
   `is_common` tinyint NOT NULL default '0',
   `product` varchar(80) NOT NULL,
   PRIMARY KEY  (`recipe_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `recipes` VALUES

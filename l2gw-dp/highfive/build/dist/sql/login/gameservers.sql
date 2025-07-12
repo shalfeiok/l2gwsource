@@ -4,4 +4,4 @@ CREATE TABLE `gameservers` (
 `hexid` varchar(50) NOT NULL default '',
 `host` varchar(50) NOT NULL default '',
 PRIMARY KEY(`server_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

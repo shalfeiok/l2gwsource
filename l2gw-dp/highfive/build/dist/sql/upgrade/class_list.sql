@@ -5,7 +5,7 @@ CREATE TABLE `class_list` (
   `parent_id` int(11) NOT NULL default '0',
   `parent_id2` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 insert  into class_list values 
 ('H_Fighter',0,-1,0),

@@ -4,5 +4,5 @@ CREATE TABLE `character_rbp` (
 `boss_id` int(11) unsigned NOT NULL,
 `points` int(11) NOT NULL default '0',
 PRIMARY KEY `pkey` (`obj_id`, `boss_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

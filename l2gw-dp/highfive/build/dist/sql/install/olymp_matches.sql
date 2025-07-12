@@ -10,6 +10,6 @@ CREATE TABLE `olymp_matches` (
   `time` decimal(11,0) NOT NULL default '0',
   `stdt` decimal(20,0) NOT NULL default '0',
   primary key(`id`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;
 
 

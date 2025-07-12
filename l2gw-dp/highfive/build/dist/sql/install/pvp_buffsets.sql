@@ -4,4 +4,4 @@ CREATE TABLE `pvp_buffsets` (
   `set_name` VARCHAR(16) NOT NULL,
   `skills` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`obj_id`, `set_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

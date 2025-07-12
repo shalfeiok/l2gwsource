@@ -25,7 +25,7 @@ CREATE TABLE `etcitem` (
   `action` varchar(50) NOT NULL DEFAULT 'action_none',
   PRIMARY KEY (`item_id`),
   KEY `class` (`class`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `etcitem` VALUES
 (17,'Wooden Arrow','','etcitem','EQUIPMENT','arrow',6,'stackable','none',0,2,0,'0-0;','icon.etc_wooden_quiver_i00',1,1,1,7,0,1,0,-1,'action_equip'),

@@ -5,7 +5,7 @@ CREATE TABLE `minions` (
   `amount` int(4) NOT NULL default '0',
   `respawn` int(4) NOT NULL default '0',
   PRIMARY KEY (`boss_id`,`minion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `minions` VALUES
 (18009,18010,2,120),

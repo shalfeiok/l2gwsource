@@ -27,4 +27,4 @@ KEY `key_loc` (`loc`),
 KEY `key_item_id` (`item_id`),
 KEY `key_class` (`class`),
 KEY `key_loc_data` (`loc_data`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

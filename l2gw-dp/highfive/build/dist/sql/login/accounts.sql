@@ -22,4 +22,4 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   UNIQUE KEY `login` (`login`),
   KEY `access_level` (`access_level`),
   KEY `pay_stat` (`pay_stat`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

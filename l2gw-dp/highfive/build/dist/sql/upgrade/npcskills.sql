@@ -5,7 +5,7 @@ CREATE TABLE `npcskills` (
   `level` int(11) NOT NULL DEFAULT '0',
   `stype` varchar(30) NOT NULL DEFAULT 'UNKNOWN',
   PRIMARY KEY (`npcid`,`skillid`,`level`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `npcskills` VALUES
 (144,4412,11,'PASSIVE'),

@@ -12,7 +12,7 @@ CREATE TABLE `skill_trees` (
   `item_id` int(11) NOT NULL default '-1',
   `item_count` int(11) NOT NULL default '1',
   PRIMARY KEY  (`class_id`,`skill_id`,`level`,`race_id`,`group_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO skill_trees VALUES
 (0,3,1,'Power Strike',50,5,0,-1,0,-1,0),

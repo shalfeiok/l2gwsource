@@ -13,4 +13,4 @@ CREATE TABLE `mail_announce` (
   INDEX(`char_name`),
   INDEX(`hwid`),
   INDEX(`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -20,4 +20,4 @@ airship SMALLINT NOT NULL DEFAULT -1,
 PRIMARY KEY (clan_id),
 KEY `leader_id` (`leader_id`),
 KEY `ally_id` (`ally_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

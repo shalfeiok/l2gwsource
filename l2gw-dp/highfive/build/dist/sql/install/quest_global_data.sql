@@ -4,4 +4,4 @@ CREATE TABLE `quest_global_data` (
   `var` varchar(20) NOT NULL default '',
   `value` varchar(255) default NULL,
   PRIMARY KEY  (`quest_name`,`var`)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+) ENGINE=MyISAM DEFAULT CHARSET=UTF8;

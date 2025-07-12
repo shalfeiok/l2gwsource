@@ -6,7 +6,7 @@ CREATE TABLE `pc_parameter` (
   `baseMp` float NOT NULL,
   `baseCp` float NOT NULL,
   PRIMARY KEY  (`class_id`,`level`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `pc_parameter` VALUES
 (0,1,80,30,32),

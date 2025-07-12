@@ -4,4 +4,4 @@ CREATE TABLE `doors_status` (
   `nexttimer` bigint(20) NOT NULL,
   `isopen` tinyint(1) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

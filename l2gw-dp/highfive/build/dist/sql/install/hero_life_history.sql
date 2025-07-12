@@ -5,4 +5,4 @@ CREATE TABLE `hero_life_history` (
   `descr` varchar(100) NOT NULL default '',
   `stdt` mediumtext NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -5,4 +5,4 @@ CREATE TABLE `banned_ips` (
 `comments` VARCHAR(255) DEFAULT NULL,
 PRIMARY KEY(`ip`),
 UNIQUE KEY `ip` (`ip`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

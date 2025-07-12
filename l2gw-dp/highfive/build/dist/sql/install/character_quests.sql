@@ -5,4 +5,4 @@ CREATE TABLE `character_quests` (
 `var`VARCHAR(20) NOT NULL DEFAULT '',
 `value` VARCHAR(255),
 PRIMARY KEY(`char_id`,`name`,`var`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

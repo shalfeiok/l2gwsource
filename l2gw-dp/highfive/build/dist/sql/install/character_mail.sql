@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS `character_mail` (
   PRIMARY KEY (`message_id`),
   KEY `src_obj_id` (`src_obj_id`),
   KEY `dst_obj_id` (`dst_obj_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

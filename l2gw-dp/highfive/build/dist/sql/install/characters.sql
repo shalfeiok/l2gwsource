@@ -51,4 +51,4 @@ UNIQUE KEY `char_name` (`char_name`),
 KEY `clanid` (`clanid`),
 KEY `account_name_idx` (`account_name`),
 KEY `char_name_idx` (`char_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

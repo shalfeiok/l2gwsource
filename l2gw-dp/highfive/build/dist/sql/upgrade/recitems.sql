@@ -4,7 +4,7 @@ CREATE TABLE `recitems` (
   `item_id` int(10) NOT NULL DEFAULT '0',
   `count` int(10) NOT NULL,
   PRIMARY KEY (`recipe_id`,`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `recitems` VALUES
 (1,1864,4),

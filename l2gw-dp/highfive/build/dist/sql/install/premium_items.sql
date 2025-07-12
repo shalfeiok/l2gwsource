@@ -8,4 +8,4 @@ CREATE TABLE `premium_items` (
 `status` boolean NOT NULL default '0',
 KEY owner_id (owner_id),
 KEY status (owner_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

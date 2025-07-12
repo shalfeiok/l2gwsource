@@ -11,7 +11,7 @@ CREATE TABLE armorsets (
  shield_skill_id varchar(20) NOT NULL default '0-1',
  enchant6skill varchar(20) NOT NULL default '0-1',
  PRIMARY KEY (id,chest)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `armorsets` (`id`,`chest`,`legs`,`head`,`gloves`,`feet`,`skill_id`,`shield`,`shield_skill_id`,`enchant6skill`) VALUES
 ('1','23','2386','43',NULL,NULL,'3500-1',NULL,'0-1','0-1'),

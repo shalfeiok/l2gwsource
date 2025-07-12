@@ -8,4 +8,4 @@ CREATE TABLE `character_effects_save` (
 `class_index` SMALLINT(3) NOT NULL DEFAULT '0',
 PRIMARY KEY (`char_obj_id`,`skill_id`,`class_index`),
 KEY `order` (`order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
