@@ -14,8 +14,8 @@
   <property name="core.src.login" location="l2gw-core/highfive/loginserver/java"/>
   <property name="core.src.fake" location="l2gw-core/highfive/fakeserver/java"/>
   <property name="core.lib" location="l2gw-core/highfive/lib"/>
-  <property name="core.config" location="l2gw-core/highfive/gameserver/config"/>
-  <property name="core.login.config" location="l2gw-core/highfive/loginserver/config"/>
+  <property name="core.config" location="l2gw-core/highfive/gameserver/java/config"/>
+  <property name="core.login.config" location="l2gw-core/highfive/loginserver/java/config"/>
   
   <!-- DP source paths -->
   <property name="dp.sql" location="l2gw-dp/highfive/sql"/>
