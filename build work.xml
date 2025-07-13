@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FullBuild" default="build-all">
+  <description>Full project build script with extended targets</description>
+  
+  <property name="master.dist.dir" location="dist"/>
+  
+  <!-- Core properties -->
+  <property name="core.dir" location="l2gw-core/highfive"/>
+  <property name="dp.dir" location="l2gw-dp/highfive"/>
+  <property name="scripts.dir" location="l2gw-scripts/highfive"/>
+
+  <target name="init">
+    <mkdir dir="${master.dist.dir}"/>
+    <echo message="Created master dist directory: ${master.dist.dir}"/>
+  </target>
+
+  <target name="build-all" depends="init, build-core, build-dp, build-scripts">
+    <echo message="All components built successfully!"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- Core Project Targets -->
+  <!-- ===================== -->
+  <target name="build-core">
+    <ant antfile="build.xml" dir="${core.dir}" target="dist">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
+  </target>
+  
+  <target name="build-core-commons">
+    <ant antfile="build.xml" dir="${core.dir}" target="commons">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
+  </target>
+  
+  <target name="build-core-jar">
+    <ant antfile="build.xml" dir="${core.dir}" target="jar">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
+  </target>
+  
+  <target name="build-core-login">
+    <ant antfile="build.xml" dir="${core.dir}" target="login">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
+  </target>
+  
+  <target name="build-core-fake">
+    <ant antfile="build.xml" dir="${core.dir}" target="fake">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
+  </target>
+  
+  <target name="build-core-dist-common" depends="build-core-jar, build-core-login">
+    <ant antfile="build.xml" dir="${core.dir}" target="dist_common">
+      <property name="dist.dir" value="${master.dist.dir}/core"/>
+    </ant>
+  </target>
+
+  <!-- ===================== -->
+  <!-- DP Project Targets -->
+  <!-- ===================== -->
+  <target name="build-dp">
+    <ant antfile="build.xml" dir="${dp.dir}" target="dist">
+      <property name="dist.dir" value="${master.dist.dir}/dp"/>
+    </ant>
+  </target>
+
+  <!-- ===================== -->
+  <!-- Scripts Project Targets -->
+  <!-- ===================== -->
+  <target name="build-scripts">
+    <ant antfile="build.xml" dir="${scripts.dir}" target="dist">
+      <property name="dist.dir" value="${master.dist.dir}/scripts"/>
+    </ant>
+  </target>
+
+  <!-- ===================== -->
+  <!-- Clean Targets -->
+  <!-- ===================== -->
+  <target name="clean-all">
+    <delete dir="${master.dist.dir}"/>
+    <ant antfile="build.xml" dir="${core.dir}" target="clean"/>
+    <ant antfile="build.xml" dir="${dp.dir}" target="clean"/>
+    <ant antfile="build.xml" dir="${scripts.dir}" target="clean"/>
+    <echo message="Cleaned all build artifacts"/>
+  </target>
+
+  <target name="clean-core">
+    <ant antfile="build.xml" dir="${core.dir}" target="clean"/>
+  </target>
+
+  <target name="clean-dp">
+    <ant antfile="build.xml" dir="${dp.dir}" target="clean"/>
+  </target>
+
+  <target name="clean-scripts">
+    <ant antfile="build.xml" dir="${scripts.dir}" target="clean"/>
+  </target>
+
+  <!-- ===================== -->
+  <!-- Individual Clean Targets for Core -->
+  <!-- ===================== -->
+  <target name="clean-core-commons">
+    <ant antfile="build.xml" dir="${core.dir}" target="clean_commons"/>
+  </target>
+
+  <target name="clean-core-login">
+    <ant antfile="build.xml" dir="${core.dir}" target="clean_login"/>
+  </target>
+
+  <target name="clean-core-fake">
+    <ant antfile="build.xml" dir="${core.dir}" target="clean_fake"/>
+  </target>
+
+  <!-- ===================== -->
+  <!-- Utility Targets -->
+  <!-- ===================== -->
+  <target name="init-core">
+    <ant antfile="build.xml" dir="${core.dir}" target="init"/>
+  </target>
+
+  <target name="init-core-commons">
+    <ant antfile="build.xml" dir="${core.dir}" target="init_commons"/>
+  </target>
+
+  <target name="init-core-login">
+    <ant antfile="build.xml" dir="${core.dir}" target="init_login"/>
+  </target>
+
+  <target name="init-core-fake">
+    <ant antfile="build.xml" dir="${core.dir}" target="init_fake"/>
+  </target>
+</project>

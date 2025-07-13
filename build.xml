@@ -1,41 +1,415 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="FullBuild" default="build-all">
-  <description>Full project build script</description>
+<project name="FullBuild" default="build-all" basedir=".">
+  <description>Full project build script with intermediate targets</description>
   
+  <!-- ===================== -->
+  <!-- GLOBAL PROPERTIES -->
+  <!-- ===================== -->
   <property name="master.dist.dir" location="dist"/>
+  <property name="build.dir" location="build"/>
   
+  <!-- Core source paths -->
+  <property name="core.src" location="l2gw-core/highfive/gameserver/java"/>
+  <property name="core.src.commons" location="l2gw-core/highfive/commons/java"/>
+  <property name="core.src.login" location="l2gw-core/highfive/loginserver/java"/>
+  <property name="core.src.fake" location="l2gw-core/highfive/fakeserver/java"/>
+  <property name="core.lib" location="l2gw-core/highfive/lib"/>
+  <property name="core.config" location="l2gw-core/highfive/gameserver/config"/>
+  <property name="core.login.config" location="l2gw-core/highfive/loginserver/config"/>
+  
+  <!-- DP source paths -->
+  <property name="dp.sql" location="l2gw-dp/highfive/sql"/>
+  <property name="dp.data" location="l2gw-dp/highfive/data"/>
+  
+  <!-- Scripts source paths -->
+  <property name="scripts.data" location="l2gw-scripts/highfive/data"/>
+  
+  <!-- Build paths -->
+  <property name="core.build" location="${build.dir}/core"/>
+  <property name="core.build.commons" location="${core.build}/commons/classes"/>
+  <property name="core.build.gameserver" location="${core.build}/gameserver/classes"/>
+  <property name="core.build.loginserver" location="${core.build}/loginserver/classes"/>
+  <property name="core.build.fakeserver" location="${core.build}/fakeserver/classes"/>
+  <property name="core.build.dist" location="${core.build}/dist"/>
+  
+  <property name="dp.build" location="${build.dir}/dp"/>
+  <property name="dp.build.dist" location="${dp.build}/dist"/>
+  
+  <property name="scripts.build" location="${build.dir}/scripts"/>
+  <property name="scripts.build.dist" location="${scripts.build}/dist"/>
+  
+  <!-- Classpath for core -->
+  <path id="core.classpath">
+    <fileset dir="${core.lib}">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+  
+  <!-- ===================== -->
+  <!-- INITIALIZATION TARGETS -->
+  <!-- ===================== -->
   <target name="init">
     <mkdir dir="${master.dist.dir}"/>
-    <echo message="Created master dist directory: ${master.dist.dir}"/>
+    <mkdir dir="${build.dir}"/>
+    <echo message="Build directory: ${build.dir}"/>
+    <echo message="Dist directory: ${master.dist.dir}"/>
   </target>
-
+  
+  <target name="init-core" depends="init">
+    <mkdir dir="${core.build}"/>
+    <mkdir dir="${core.build.commons}"/>
+    <mkdir dir="${core.build.gameserver}"/>
+    <mkdir dir="${core.build.loginserver}"/>
+    <mkdir dir="${core.build.fakeserver}"/>
+    <mkdir dir="${core.build.dist}"/>
+    <mkdir dir="${core.build.dist}/login"/>
+    <mkdir dir="${core.build.dist}/gameserver"/>
+    <mkdir dir="${core.build.dist}/fakeserver"/>
+    <echo message="Core build directories initialized"/>
+  </target>
+  
+  <target name="init-dp" depends="init">
+    <mkdir dir="${dp.build}"/>
+    <mkdir dir="${dp.build.dist}"/>
+    <mkdir dir="${dp.build.dist}/sql"/>
+    <mkdir dir="${dp.build.dist}/gameserver"/>
+    <mkdir dir="${dp.build.dist}/gameserver/data"/>
+    <echo message="DataPack build directories initialized"/>
+  </target>
+  
+  <target name="init-scripts" depends="init">
+    <mkdir dir="${scripts.build}"/>
+    <mkdir dir="${scripts.build.dist}"/>
+    <mkdir dir="${scripts.build.dist}/gameserver"/>
+    <mkdir dir="${scripts.build.dist}/gameserver/data"/>
+    <echo message="Scripts build directories initialized"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- MAIN BUILD TARGETS -->
+  <!-- ===================== -->
   <target name="build-all" depends="init, build-core, build-dp, build-scripts">
     <echo message="All components built successfully!"/>
   </target>
   
-  <target name="build-core">
-    <ant antfile="build.xml" dir="l2gw-core/highfive" target="dist">
-      <property name="dist.dir" value="${master.dist.dir}/core"/>
-    </ant>
+  <target name="build-core" depends="init-core, compile-core-commons, compile-core-gameserver, compile-core-login, compile-core-fake, dist-core">
+    <echo message="Core build complete"/>
   </target>
   
-  <target name="build-dp">
-    <ant antfile="build.xml" dir="l2gw-dp/highfive" target="dist">
-      <property name="dist.dir" value="${master.dist.dir}/dp"/>
-    </ant>
+  <target name="build-dp" depends="init-dp, dist-dp">
+    <echo message="DataPack build complete"/>
   </target>
   
-  <target name="build-scripts">
-    <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="dist">
-      <property name="dist.dir" value="${master.dist.dir}/scripts"/>
-    </ant>
+  <target name="build-scripts" depends="init-scripts, dist-scripts">
+    <echo message="Scripts build complete"/>
   </target>
   
+  <!-- ===================== -->
+  <!-- CORE COMPILATION TARGETS -->
+  <!-- ===================== -->
+  <target name="compile-core-commons" depends="init-core">
+    <javac destdir="${core.build.commons}"
+           optimize="off"
+           debug="on"
+           source="1.8"
+           target="1.8"
+           encoding="UTF-8"
+           nowarn="off"
+           includeantruntime="false">
+      <compilerarg value="-Xlint:all,-options"/>
+      <src path="${core.src.commons}"/>
+      <classpath refid="core.classpath"/>
+    </javac>
+    <echo message="Commons compilation complete"/>
+  </target>
+  
+  <target name="compile-core-gameserver" depends="init-core, compile-core-commons">
+    <javac destdir="${core.build.gameserver}"
+           optimize="off"
+           debug="on"
+           source="1.8"
+           target="1.8"
+           encoding="UTF-8"
+           nowarn="off"
+           includeantruntime="false">
+      <compilerarg value="-Xlint:all,-options"/>
+      <src path="${core.src}"/>
+      <classpath refid="core.classpath"/>
+    </javac>
+    <echo message="GameServer compilation complete"/>
+  </target>
+  
+  <target name="compile-core-login" depends="init-core">
+    <javac destdir="${core.build.loginserver}"
+           optimize="off"
+           debug="on"
+           source="1.8"
+           target="1.8"
+           encoding="UTF-8"
+           nowarn="off"
+           includeantruntime="false">
+      <compilerarg value="-Xlint:all,-options"/>
+      <src path="${core.src.login}"/>
+      <classpath refid="core.classpath"/>
+    </javac>
+    <echo message="LoginServer compilation complete"/>
+  </target>
+  
+  <target name="compile-core-fake" depends="init-core">
+    <javac destdir="${core.build.fakeserver}"
+           optimize="off"
+           debug="on"
+           source="1.8"
+           target="1.8"
+           encoding="UTF-8"
+           nowarn="off"
+           includeantruntime="false">
+      <compilerarg value="-Xlint:all,-options"/>
+      <src path="${core.src.fake}"/>
+      <classpath refid="core.classpath"/>
+    </javac>
+    <echo message="FakeServer compilation complete"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- CORE JAR CREATION TARGETS -->
+  <!-- ===================== -->
+  <target name="jar-core-commons" depends="compile-core-commons">
+    <tstamp>
+      <format property="build.tstamp" pattern="yyyy.MM.dd HH:mm"/>
+    </tstamp>
+    <jar destfile="${core.build}/commons-l2gw.jar">
+      <fileset dir="${core.build.commons}"/>
+      <manifest>
+        <attribute name="Build-Date" value="${build.tstamp}"/>
+      </manifest>
+    </jar>
+    <echo message="Commons JAR created"/>
+  </target>
+  
+  <target name="jar-core-gameserver" depends="compile-core-gameserver">
+    <tstamp>
+      <format property="build.tstamp" pattern="yyyy.MM.dd HH:mm"/>
+    </tstamp>
+    <jar destfile="${core.build}/l2server.jar">
+      <fileset dir="${core.build.gameserver}"/>
+      <manifest>
+        <attribute name="Main-Class" value="ru.l2gw.gameserver.GameServer"/>
+        <attribute name="Build-Date" value="${build.tstamp}"/>
+      </manifest>
+    </jar>
+    <echo message="GameServer JAR created"/>
+  </target>
+  
+  <target name="jar-core-loginserver" depends="compile-core-login">
+    <tstamp>
+      <format property="build.tstamp" pattern="yyyy.MM.dd HH:mm"/>
+    </tstamp>
+    <jar destfile="${core.build}/l2login.jar">
+      <fileset dir="${core.build.loginserver}"/>
+      <manifest>
+        <attribute name="Main-Class" value="ru.l2gw.loginserver.L2LoginServer"/>
+        <attribute name="Build-Date" value="${build.tstamp}"/>
+      </manifest>
+    </jar>
+    <echo message="LoginServer JAR created"/>
+  </target>
+  
+  <target name="jar-core-fakeserver" depends="compile-core-fake">
+    <tstamp>
+      <format property="build.tstamp" pattern="yyyy.MM.dd HH:mm"/>
+    </tstamp>
+    <jar destfile="${core.build}/l2fake.jar">
+      <fileset dir="${core.build.fakeserver}"/>
+      <manifest>
+        <attribute name="Main-Class" value="ru.l2gw.fakeserver.FakeServer"/>
+        <attribute name="Build-Date" value="${build.tstamp}"/>
+      </manifest>
+    </jar>
+    <echo message="FakeServer JAR created"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- CORE DISTRIBUTION TARGETS -->
+  <!-- ===================== -->
+  <target name="dist-core-prepare" depends="jar-core-commons, jar-core-gameserver, jar-core-loginserver, jar-core-fakeserver">
+    <!-- Copy JAR files to dist structure -->
+    <copy todir="${core.build.dist}/login">
+      <fileset dir="${core.build}">
+        <include name="l2login.jar"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${core.build.dist}/gameserver">
+      <fileset dir="${core.build}">
+        <include name="l2server.jar"/>
+        <include name="commons-l2gw.jar"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${core.build.dist}/fakeserver">
+      <fileset dir="${core.build}">
+        <include name="l2fake.jar"/>
+      </fileset>
+    </copy>
+    
+    <!-- Copy libraries -->
+    <copy todir="${core.build.dist}/login">
+      <fileset dir="${core.lib}">
+        <include name="*.jar"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${core.build.dist}/gameserver">
+      <fileset dir="${core.lib}">
+        <include name="*.jar"/>
+      </fileset>
+    </copy>
+    
+    <!-- Copy configuration files -->
+    <copy todir="${core.build.dist}/gameserver/config">
+      <fileset dir="${core.config}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${core.build.dist}/login/config">
+      <fileset dir="${core.login.config}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <!-- Copy startup scripts -->
+    <copy todir="${core.build.dist}/gameserver">
+      <fileset dir="${core.src}">
+        <include name="GameServer_loop.sh"/>
+        <include name="StartGameServer.*"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${core.build.dist}/login">
+      <fileset dir="${core.src.login}">
+        <include name="StartLoginServer.*"/>
+        <include name="LoginServer_loop.sh"/>
+      </fileset>
+    </copy>
+    
+    <!-- Fix line endings -->
+    <fixcrlf srcdir="${core.build.dist}/gameserver" eol="lf" includes="**/*.sh"/>
+    <fixcrlf srcdir="${core.build.dist}/login" eol="lf" includes="**/*.sh"/>
+    <fixcrlf srcdir="${core.build.dist}/gameserver" eol="crlf" includes="**/*.bat"/>
+    <fixcrlf srcdir="${core.build.dist}/login" eol="crlf" includes="**/*.bat"/>
+    
+    <echo message="Core distribution prepared"/>
+  </target>
+  
+  <target name="dist-core" depends="dist-core-prepare">
+    <!-- Create final ZIP -->
+    <zip destfile="${master.dist.dir}/l2-server.zip" basedir="${core.build.dist}"/>
+    <echo message="Core distribution created at: ${master.dist.dir}/l2-server.zip"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- DP DISTRIBUTION TARGETS -->
+  <!-- ===================== -->
+  <target name="dist-dp-prepare" depends="init-dp">
+    <!-- Copy SQL files -->
+    <copy todir="${dp.build.dist}/sql">
+      <fileset dir="${dp.sql}">
+        <include name="**/*.*"/>
+        <exclude name="optional/board/**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <!-- Copy data files -->
+    <copy todir="${dp.build.dist}/gameserver/data">
+      <fileset dir="${dp.data}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <echo message="DataPack distribution prepared"/>
+  </target>
+  
+  <target name="dist-dp" depends="dist-dp-prepare">
+    <!-- Create final ZIP -->
+    <zip destfile="${master.dist.dir}/l2-dp.zip" basedir="${dp.build.dist}"/>
+    <echo message="DataPack distribution created at: ${master.dist.dir}/l2-dp.zip"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- SCRIPTS DISTRIBUTION TARGETS -->
+  <!-- ===================== -->
+  <target name="dist-scripts-prepare" depends="init-scripts">
+    <!-- Copy script files -->
+    <copy todir="${scripts.build.dist}/gameserver/data">
+      <fileset dir="${scripts.data}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    
+    <echo message="Scripts distribution prepared"/>
+  </target>
+  
+  <target name="dist-scripts" depends="dist-scripts-prepare">
+    <!-- Create final ZIP -->
+    <zip destfile="${master.dist.dir}/l2-script.zip" basedir="${scripts.build.dist}"/>
+    <echo message="Scripts distribution created at: ${master.dist.dir}/l2-script.zip"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- CLEAN TARGETS -->
+  <!-- ===================== -->
   <target name="clean-all">
     <delete dir="${master.dist.dir}"/>
-    <ant antfile="build.xml" dir="l2gw-core/highfive" target="clean"/>
-    <ant antfile="build.xml" dir="l2gw-dp/highfive" target="clean"/>
-    <ant antfile="build.xml" dir="l2gw-scripts/highfive" target="clean"/>
+    <delete dir="${build.dir}"/>
     <echo message="Cleaned all build artifacts"/>
+  </target>
+  
+  <target name="clean-core">
+    <delete dir="${core.build}"/>
+    <echo message="Cleaned core build artifacts"/>
+  </target>
+  
+  <target name="clean-core-compilation">
+    <delete dir="${core.build.commons}"/>
+    <delete dir="${core.build.gameserver}"/>
+    <delete dir="${core.build.loginserver}"/>
+    <delete dir="${core.build.fakeserver}"/>
+    <echo message="Cleaned core compilation artifacts"/>
+  </target>
+  
+  <target name="clean-core-jars">
+    <delete>
+      <fileset dir="${core.build}">
+        <include name="*.jar"/>
+      </fileset>
+    </delete>
+    <echo message="Cleaned core JAR files"/>
+  </target>
+  
+  <target name="clean-dp">
+    <delete dir="${dp.build}"/>
+    <echo message="Cleaned DataPack build artifacts"/>
+  </target>
+  
+  <target name="clean-scripts">
+    <delete dir="${scripts.build}"/>
+    <echo message="Cleaned Scripts build artifacts"/>
+  </target>
+  
+  <!-- ===================== -->
+  <!-- UTILITY TARGETS -->
+  <!-- ===================== -->
+  <target name="build-core-jars" depends="jar-core-commons, jar-core-gameserver, jar-core-loginserver, jar-core-fakeserver">
+    <echo message="All core JARs created"/>
+  </target>
+  
+  <target name="compile-all" depends="compile-core-commons, compile-core-gameserver, compile-core-login, compile-core-fake">
+    <echo message="All components compiled"/>
+  </target>
+  
+  <target name="prepare-all" depends="dist-core-prepare, dist-dp-prepare, dist-scripts-prepare">
+    <echo message="All distributions prepared for packaging"/>
   </target>
 </project>
