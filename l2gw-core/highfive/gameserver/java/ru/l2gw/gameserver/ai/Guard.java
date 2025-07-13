@@ -14,81 +14,104 @@ import static ru.l2gw.gameserver.ai.CtrlIntention.AI_INTENTION_ATTACK;
 
 public class Guard extends Fighter implements Runnable
 {
+    public Guard(L2Character actor)
+    {
+        super(actor);
+    }
 
-	public Guard(L2Character actor)
-	{
-		super(actor);
-	}
+    @Override
+    protected boolean randomWalk()
+    {
+        return false;
+    }
 
-	@Override
-	protected boolean randomWalk()
-	{
-		return false;
-	}
+    @Override
+    protected boolean thinkActive()
+    {
+        if(_actor.isDead())
+            return true;
 
-	@Override
-	protected boolean thinkActive()
-	{
-		if(_actor.isDead())
-			return true;
+        L2GuardInstance guard = (L2GuardInstance) _actor;
 
-		L2GuardInstance guard = (L2GuardInstance) _actor;
+        if(getIntention() == AI_INTENTION_ACTIVE)
+        {
+            for(L2Character cha : L2World.getAroundCharacters(_actor, 600, Config.PLAYER_VISIBILITY_Z))
+            {
+                if(cha == null) continue;
+                
+                if(Config.DEBUG)
+                    _log.debug(_actor + ": PK " + cha + " entered scan range");
 
-		if(getIntention() == AI_INTENTION_ACTIVE)
-			for(L2Character cha : L2World.getAroundCharacters(_actor, 600, Config.PLAYER_VISIBILITY_Z))
-			{
-				if(Config.DEBUG)
-					_log.debug(_actor + ": PK " + cha + " entered scan range");
+                if(autoAttackCondition(cha))
+                {
+                    guard.addDamageHate(cha, 0, 1);
+                    setIntention(AI_INTENTION_ATTACK, cha, null);
+                    return true;
+                }
+            }
+        }
 
-				if(autoAttackCondition(cha))
-				{
-					guard.addDamageHate(cha, 0, 1);
-					setIntention(AI_INTENTION_ATTACK, cha, null);
-					return true;
-				}
-			}
+        return super.thinkActive();
+    }
 
-		return super.thinkActive();
-	}
+    @Override
+    public boolean checkAggression(L2Character target)
+    {
+        // Проверка базовых условий
+        if(target == null || 
+           target.getKarma() <= 0 || 
+           _intention != CtrlIntention.AI_INTENTION_ACTIVE || 
+           _globalAggro < 0)
+            return false;
 
-	@Override
-	public boolean checkAggression(L2Character target)
-	{
-		if(target.getKarma() <= 0)
-			return false;
-		if(_intention != CtrlIntention.AI_INTENTION_ACTIVE)
-			return false;
-		if(_globalAggro < 0)
-			return false;
-		if(!_thisActor.getAggroList().containsKey(target.getObjectId()) && !_thisActor.isInRange(target, 600))
-			return false;
-		if(Math.abs(target.getZ() - _actor.getZ()) > 400)
-			return false;
-		if(isSilent(target))
-			return false;
-		if(!GeoEngine.canSeeTarget(_actor, target))
-			return false;
-		if(target.isPlayer() && ((L2Player) target).isGM() && ((L2Player) target).isInvisible())
-			return false;
-		if((target.isSummon() || target.isPet()) && target.getPlayer() != null)
-			_thisActor.addDamageHate(target.getPlayer(), 0, 1);
+        // Проверка расстояния и агрессии
+        boolean inAggroList = _thisActor.getAggroList().containsKey(target.getObjectId());
+        boolean inRange = inAggroList || _thisActor.isInRange(target, 600);
+        
+        if(!inRange || 
+           Math.abs(target.getZ() - _actor.getZ()) > 400 || 
+           isSilent(target) || 
+           !GeoEngine.canSeeTarget(_actor, target))
+            return false;
 
-		_thisActor.addDamageHate(target, 0, 2);
-		startRunningTask(2000);
-		setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
-		return true;
-	}
+        // Обработка игроков (включая GM)
+        if(target.isPlayer())
+        {
+            L2Player player = (L2Player) target;
+            if(player.isGM() && player.isInvisible())
+                return false;
+        }
 
-	protected boolean autoAttackCondition(L2Character target)
-	{
-		if(target.isAlikeDead() || target.isInvul())
-			return false;
-		if(!GeoEngine.canSeeTarget(_actor, target))
-			return false;
-		if(target.getKarma() > 0)
-			return true;
-		if(Config.ALLOW_GUARDS && target.isMonster() && !(target instanceof L2RaidBossInstance))
-			return ((L2MonsterInstance) target).isAggressive();
-		return false;
-	}
+        // Обработка питомцев и прислужников
+        if((target.isSummon() || target.isPet()) && target.getPlayer() != null)
+            _thisActor.addDamageHate(target.getPlayer(), 0, 1);
+
+        _thisActor.addDamageHate(target, 0, 2);
+        startRunningTask(2000);
+        setIntention(CtrlIntention.AI_INTENTION_ATTACK, target);
+        return true;
+    }
+
+    protected boolean autoAttackCondition(L2Character target)
+    {
+        // Базовые проверки
+        if(target == null || 
+           target.isAlikeDead() || 
+           target.isInvul() || 
+           !GeoEngine.canSeeTarget(_actor, target))
+            return false;
+
+        // Атаковать игроков с кармой
+        if(target.getKarma() > 0)
+            return true;
+
+        // Атаковать агрессивных мобов
+        if(Config.ALLOW_GUARDS && 
+           target.isMonster() && 
+           !(target instanceof L2RaidBossInstance) && 
+           ((L2MonsterInstance) target).isAggressive())
+            return true;
+        
+        return false;
+    }
 }

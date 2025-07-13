@@ -132,7 +132,7 @@ public class ConfigProtect
 		String s = getProperty(prop, name);
 		return s == null ? _default : Integer.parseInt(s.trim());
 	}
-
+	@SuppressWarnings("unused")
 	private static int getIntHexProperty(Properties prop, String name, int _default)
 	{
 		String s = getProperty(prop, name);
@@ -155,7 +155,7 @@ public class ConfigProtect
 		String s = getProperty(prop, name);
 		return s == null ? _default : Byte.parseByte(s.trim());
 	}
-
+	@SuppressWarnings("unused")
 	private static byte getByteProperty(Properties prop, String name, int _default)
 	{
 		return getByteProperty(prop, name, (byte) _default);
@@ -172,12 +172,12 @@ public class ConfigProtect
 		String s = getProperty(prop, name);
 		return s == null ? _default : Float.parseFloat(s.trim());
 	}
-
+	@SuppressWarnings("unused")
 	private static float getFloatProperty(Properties prop, String name, double _default)
 	{
 		return getFloatProperty(prop, name, (float) _default);
 	}
-
+	@SuppressWarnings("unused")
 	private static double getDoubleProperty(Properties prop, String name, double _default)
 	{
 		String s = getProperty(prop, name);

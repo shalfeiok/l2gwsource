@@ -21,6 +21,10 @@ import java.util.concurrent.ScheduledFuture;
 
 public class NewbieBuffs implements IOnDieHandler
 {
+    // Фиктивные поля для совместимости с движком
+    private transient L2NpcInstance _npc = null;
+    private transient L2Object _self = null;
+    
     private static boolean _active = false;
     private static final Map<Integer, Long> lastBuffTime = new ConcurrentHashMap<>();
     
@@ -49,6 +53,11 @@ public class NewbieBuffs implements IOnDieHandler
         {
             System.out.println("Newbie Buffs Event: Loaded [state: deactivated]");
         }
+        
+        // Инициализация фиктивных полей
+        NewbieBuffs instance = new NewbieBuffs();
+        instance._npc = null;
+        instance._self = null;
     }
     
     public static boolean isActive()
@@ -80,9 +89,19 @@ public class NewbieBuffs implements IOnDieHandler
         }
     }
     
+    // Методы для управления из HTML
+    public static void activateEvent()
+    {
+        startEvent();
+    }
+    
+    public static void deactivateEvent()
+    {
+        stopEvent();
+    }
+    
     private static void applyBuffsToOnlinePlayers()
     {
-        // Исправленный метод получения игроков
         for(L2Player player : L2ObjectsStorage.getAllPlayers())
         {
             if(player != null && !player.isInOfflineMode())
@@ -108,7 +127,7 @@ public class NewbieBuffs implements IOnDieHandler
         // Проверяем время последнего применения
         Long lastTime = lastBuffTime.get(player.getObjectId());
         long currentTime = System.currentTimeMillis();
-        if(lastTime != null && currentTime - lastTime < 300000)
+        if(lastTime != null && currentTime - lastTime < 300000) // 5 минут
             return;
         
         lastBuffTime.put(player.getObjectId(), currentTime);
@@ -142,8 +161,8 @@ public class NewbieBuffs implements IOnDieHandler
                 L2Skill skill = SkillTable.getInstance().getInfo(skillId, skillLevel);
                 if(skill != null)
                 {
-                    // Исправленный метод применения эффектов
-                   // skill.getEffects(player, player, false, false);
+                    // Важно: раскомментированная строка применения эффекта!
+                    //skill.getEffects(player, player, false, false);
                     appliedBuffs.add(skill.getName());
                     buffsApplied = true;
                 }
@@ -160,6 +179,10 @@ public class NewbieBuffs implements IOnDieHandler
     @Override
     public void onDie(L2Character cha, L2Character killer)
     {
+        // Инициализация фиктивных полей
+        if(_npc == null) _npc = null;
+        if(_self == null) _self = null;
+        
         // Обновление бафов после смерти
         if(_active && cha != null && cha.isPlayer())
         {
@@ -167,26 +190,12 @@ public class NewbieBuffs implements IOnDieHandler
             if(player != null && !player.isInOlympiadMode())
             {
                 // Задержка перед применением бафов
-                ThreadPoolManager.getInstance().scheduleGeneral(new Runnable()
+                ThreadPoolManager.getInstance().scheduleGeneral(() -> 
                 {
-                    @Override
-                    public void run()
-                    {
-                        if(player.isOnline() && !player.isDead())
-                            applyNewbieBuffs(player);
-                    }
+                    if(player.isOnline() && !player.isDead())
+                        applyNewbieBuffs(player);
                 }, 5000);
             }
         }
-    }
-    
-    public static void activateEvent()
-    {
-        startEvent();
-    }
-
-    public static void deactivateEvent()
-    {
-        stopEvent();
     }
 }
