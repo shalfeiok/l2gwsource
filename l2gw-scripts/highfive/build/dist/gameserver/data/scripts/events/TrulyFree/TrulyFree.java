@@ -21,6 +21,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,206 +31,268 @@ import java.util.Map;
  */
 public class TrulyFree extends Functions implements ScriptFile
 {
-	private static boolean active;
-	private static final Map<Integer, Reward> rewards = new HashMap<>();
+    private static boolean active;
+    private static final Map<Integer, Reward> rewards = new HashMap<>();
 
-	@Override
-	public void onLoad()
-	{
-		active = ServerVariables.getBool("truly_free", false);
-		_log.info("Loaded Event: Truly Free [state: " + (active ? "activated]" : "deactivated]"));
+    @Override
+    public void onLoad()
+    {
+        // Создаем таблицу, если она не существует
+        createTableIfNotExists();
+        
+        active = ServerVariables.getBool("truly_free", false);
+        _log.info("Loaded Event: Truly Free [state: " + (active ? "activated]" : "deactivated]"));
 
-		if(active)
-		{
-			Connection con = null;
-			PreparedStatement stmt = null;
+        if(active)
+        {
+            cleanupOrphanedRecords();
+        }
 
-			try
-			{
-				con = DatabaseFactory.getInstance().getConnection();
-				stmt = con.prepareStatement("DELETE FROM event_truly_free WHERE object_id NOT IN (SELECT obj_id FROM characters)");
-				stmt.execute();
-			}
-			catch(Exception e)
-			{
-				_log.error("TrulyFree: can't clean event table: " + e, e);
-			}
-			finally
-			{
-				DbUtils.closeQuietly(con, stmt);
-			}
+        loadConfig();
+    }
 
-		}
+    private void createTableIfNotExists()
+    {
+        Connection con = null;
+        Statement stmt = null;
+        try
+        {
+            con = DatabaseFactory.getInstance().getConnection();
+            stmt = con.createStatement();
+            stmt.executeUpdate(
+                "CREATE TABLE IF NOT EXISTS event_truly_free (" +
+                "object_id INT NOT NULL, " +
+                "level INT NOT NULL, " +
+                "PRIMARY KEY (object_id, level)" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8"
+            );
+            _log.info("TrulyFree: event_truly_free table checked/created");
+        }
+        catch(Exception e)
+        {
+            _log.error("TrulyFree: can't create table: " + e, e);
+        }
+        finally
+        {
+            DbUtils.closeQuietly(con, stmt);
+        }
+    }
 
-		try
-		{
-			File file = new File("data/scripts/events/TrulyFree/trulyfree.xml");
+    private void cleanupOrphanedRecords()
+    {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try
+        {
+            con = DatabaseFactory.getInstance().getConnection();
+            stmt = con.prepareStatement(
+                "DELETE FROM event_truly_free WHERE object_id NOT IN (SELECT obj_id FROM characters)"
+            );
+            int deleted = stmt.executeUpdate();
+            if(deleted > 0)
+            {
+                _log.info("TrulyFree: deleted " + deleted + " orphaned records");
+            }
+        }
+        catch(Exception e)
+        {
+            _log.error("TrulyFree: can't clean event table: " + e, e);
+        }
+        finally
+        {
+            DbUtils.closeQuietly(con, stmt);
+        }
+    }
 
-			if(!file.exists())
-			{
-				_log.info("Loaded Event: Truly Free config file trulyfree.xml is missing!");
-				active = false;
-				return;
-			}
+    private void loadConfig()
+    {
+        try
+        {
+            File file = new File("data/scripts/events/TrulyFree/trulyfree.xml");
+            if(!file.exists())
+            {
+                _log.error("TrulyFree: config file trulyfree.xml is missing!");
+                active = false;
+                return;
+            }
 
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			factory.setValidating(false);
-			factory.setIgnoringComments(true);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(false);
+            factory.setIgnoringComments(true);
 
-			Document doc = factory.newDocumentBuilder().parse(file);
-			rewards.clear();
+            Document doc = factory.newDocumentBuilder().parse(file);
+            rewards.clear();
 
-			for(Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
-				if("trulyfree".equalsIgnoreCase(n.getNodeName()))
-				{
-					for(Node r = n.getFirstChild(); r != null; r = r.getNextSibling())
-						if("reward".equals(r.getNodeName()))
-						{
-							Reward reward = new Reward(XmlUtil.getIntAttribute(r, "level"));
-							for(Node i = r.getFirstChild(); i != null; i = i.getNextSibling())
-							{
-								if("item".equals(i.getNodeName()))
-								{
-									StatsSet item = new StatsSet();
-									item.set("item_id", XmlUtil.getIntAttribute(i, "id"));
-									item.set("count", XmlUtil.getLongAttribute(i, "count"));
-									reward.getItems().add(item);
-								}
-							}
-							rewards.put(reward.getLevel(), reward);
-						}
-				}
-		}
-		catch(Exception e)
-		{
-			_log.error("Loaded Event: Truly Free error: " + e, e);
-		}
-	}
+            for(Node n = doc.getFirstChild(); n != null; n = n.getNextSibling())
+            {
+                if("trulyfree".equalsIgnoreCase(n.getNodeName()))
+                {
+                    for(Node r = n.getFirstChild(); r != null; r = r.getNextSibling())
+                    {
+                        if("reward".equals(r.getNodeName()))
+                        {
+                            Reward reward = new Reward(XmlUtil.getIntAttribute(r, "level"));
+                            for(Node i = r.getFirstChild(); i != null; i = i.getNextSibling())
+                            {
+                                if("item".equals(i.getNodeName()))
+                                {
+                                    StatsSet item = new StatsSet();
+                                    item.set("item_id", XmlUtil.getIntAttribute(i, "id"));
+                                    item.set("count", XmlUtil.getLongAttribute(i, "count"));
+                                    reward.getItems().add(item);
+                                }
+                            }
+                            rewards.put(reward.getLevel(), reward);
+                        }
+                    }
+                }
+            }
+            _log.info("TrulyFree: loaded " + rewards.size() + " reward levels");
+        }
+        catch(Exception e)
+        {
+            _log.error("TrulyFree: error loading config: " + e, e);
+        }
+    }
 
-	@Override
-	public void onReload()
-	{
-	}
+    // Остальные методы остаются без изменений
+    @Override
+    public void onReload() {}
 
-	@Override
-	public void onShutdown()
-	{
-	}
+    @Override
+    public void onShutdown() {}
 
-	public void start()
-	{
-		L2Player player = (L2Player) self;
-		if(!AdminTemplateManager.checkBoolean("eventMaster", player))
-			return;
+    public void start()
+    {
+        L2Player player = (L2Player) self;
+        if(!AdminTemplateManager.checkBoolean("eventMaster", player))
+            return;
 
-		if(!active)
-		{
-			ServerVariables.set("truly_free", "true");
-			onLoad();
-		}
-		else
-			player.sendMessage("Event 'Truly Free' already started.");
+        if(!active)
+        {
+            ServerVariables.set("truly_free", "true");
+            active = true;
+            _log.info("TrulyFree event started by " + player.getName());
+        }
+        else
+        {
+            player.sendMessage("Event 'Truly Free' already started.");
+        }
+        show(Files.read("data/html/admin/events2.htm", player), player);
+    }
 
-		show(Files.read("data/html/admin/events2.htm", player), player);
-	}
+    public void stop()
+    {
+        L2Player player = (L2Player) self;
+        if(!AdminTemplateManager.checkBoolean("eventMaster", player))
+            return;
 
-	public void stop()
-	{
-		L2Player player = (L2Player) self;
-		if(!AdminTemplateManager.checkBoolean("eventMaster", player))
-			return;
+        if(active)
+        {
+            ServerVariables.unset("truly_free");
+            active = false;
+            _log.info("Event 'Truly Free' stopped by " + player.getName());
+        }
+        else
+        {
+            player.sendMessage("Event 'Truly Free' not started.");
+        }
+        show(Files.read("data/html/admin/events2.htm", player), player);
+    }
 
-		if(active)
-		{
-			ServerVariables.unset("truly_free");
-			active = false;
-			_log.info("Event 'Truly Free' stopped.");
-		}
-		else
-			player.sendMessage("Event 'Truly Free' not started.");
+    public static void onLevelUp(L2Player player)
+    {
+        if(!active || !rewards.containsKey((int) player.getLevel()))
+            return;
 
-		show(Files.read("data/html/admin/events2.htm", player), player);
-	}
+        int objectId = player.getObjectId();
+        int level = player.getLevel();
 
-	public static void onLevelUp(L2Player player)
-	{
-		if(active && rewards.containsKey((int) player.getLevel()) && !checkRewardAtLevel(player.getObjectId(), player.getLevel()))
-		{
-			Connection con = null;
-			PreparedStatement stmt = null;
+        if(checkRewardAtLevel(objectId, level))
+            return;
 
-			try
-			{
-				con = DatabaseFactory.getInstance().getConnection();
-				stmt = con.prepareStatement("INSERT INTO event_truly_free VALUES(?, ?)");
-				stmt.setInt(1, player.getObjectId());
-				stmt.setInt(2, player.getLevel());
-				stmt.execute();
-			}
-			catch(Exception e)
-			{
-				_log.error("TrulyFree: can't update reward status: " + e, e);
-			}
-			finally
-			{
-				DbUtils.closeQuietly(con, stmt);
-			}
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try
+        {
+            con = DatabaseFactory.getInstance().getConnection();
+            stmt = con.prepareStatement("INSERT INTO event_truly_free VALUES(?, ?)");
+            stmt.setInt(1, objectId);
+            stmt.setInt(2, level);
+            stmt.execute();
+            
+            Reward reward = rewards.get(level);
+            for(StatsSet item : reward.getItems())
+            {
+                PremiumItemManager.sendItemToPlayer(
+                    objectId, 
+                    item.getInteger("item_id"), 
+                    item.getLong("count"), 
+                    "Play4Free Truly Free"
+                );
+            }
+            
+            if(!reward.getItems().isEmpty())
+            {
+                player.sendPacket(Msg.ExNotifyPremiumItem);
+                _log.info("TrulyFree: reward sent to " + player.getName() + " for level " + level);
+            }
+        }
+        catch(Exception e)
+        {
+            _log.error("TrulyFree: can't update reward status: " + e, e);
+        }
+        finally
+        {
+            DbUtils.closeQuietly(con, stmt);
+        }
+    }
 
-			Reward reward = rewards.get((int) player.getLevel());
-			for(StatsSet item : reward.getItems())
-				PremiumItemManager.sendItemToPlayer(player.getObjectId(), item.getInteger("item_id"), item.getLong("count"), "Play4Free Truly Free");
+    private static boolean checkRewardAtLevel(int objectId, int level)
+    {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rset = null;
 
-			if(!reward.getItems().isEmpty())
-				player.sendPacket(Msg.ExNotifyPremiumItem);
-		}
-	}
+        try
+        {
+            con = DatabaseFactory.getInstance().getConnection();
+            stmt = con.prepareStatement("SELECT 1 FROM event_truly_free WHERE object_id = ? AND level = ?");
+            stmt.setInt(1, objectId);
+            stmt.setInt(2, level);
+            rset = stmt.executeQuery();
+            return rset.next();
+        }
+        catch(Exception e)
+        {
+            _log.error("TrulyFree: can't check reward status: " + e, e);
+            return true; // Безопасный возврат в случае ошибки
+        }
+        finally
+        {
+            DbUtils.closeQuietly(con, stmt, rset);
+        }
+    }
 
-	private static boolean checkRewardAtLevel(int objectId, int level)
-	{
-		Connection con = null;
-		PreparedStatement stmt = null;
-		ResultSet rset = null;
+    private static class Reward
+    {
+        private final int level;
+        private final GArray<StatsSet> items;
 
-		try
-		{
-			con = DatabaseFactory.getInstance().getConnection();
-			stmt = con.prepareStatement("SELECT * FROM event_truly_free WHERE object_id = ? AND level = ?");
-			stmt.setInt(1, objectId);
-			stmt.setInt(2, level);
-			rset = stmt.executeQuery();
-			return rset.next();
-		}
-		catch(Exception e)
-		{
-			_log.error("TrulyFree: can't check reward status: " + e, e);
-		}
-		finally
-		{
-			DbUtils.closeQuietly(con, stmt, rset);
-		}
+        private Reward(int level)
+        {
+            this.level = level;
+            items = new GArray<>();
+        }
 
-		return true;
-	}
+        public int getLevel()
+        {
+            return level;
+        }
 
-	private static class Reward
-	{
-		private final int level;
-		private final GArray<StatsSet> items;
-
-		private Reward(int level)
-		{
-			this.level = level;
-			items = new GArray<>();
-		}
-
-		public int getLevel()
-		{
-			return level;
-		}
-
-		public GArray<StatsSet> getItems()
-		{
-			return items;
-		}
-	}
+        public GArray<StatsSet> getItems()
+        {
+            return items;
+        }
+    }
 }

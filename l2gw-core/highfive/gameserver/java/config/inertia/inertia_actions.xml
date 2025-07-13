@@ -1,0 +1,4 @@
+<actions>
+  <action slot="0" skillId="123" reuse="5.0" userHp="80" targetHp="50"/>
+  <action slot="1" skillId="456" reuse="10.0" userHp="60"/>
+</actions>

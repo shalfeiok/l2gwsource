@@ -1,0 +1,4 @@
+<filters>
+  <npc id="12345"/> <!-- Raid Boss -->
+  <npc id="54321"/> <!-- Invulnerable NPC -->
+</filters>
