@@ -7,6 +7,7 @@ import ru.l2gw.gameserver.serverpackets.L2GameServerPacket;
  * @author rage
  * @date 16.10.2010 11:50:23
  */
+@SuppressWarnings("unused")
 public class ProtectPing extends L2GameServerPacket
 {
 	private static int y;

@@ -1,3 +1,0 @@
-ALTER TABLE accounts DROP PRIMARY KEY;
-ALTER TABLE accounts ADD `account_id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
-ALTER TABLE accounts ADD unique key(`login`);

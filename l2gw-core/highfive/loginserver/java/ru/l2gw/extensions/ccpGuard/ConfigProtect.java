@@ -16,6 +16,20 @@ public class ConfigProtect extends ServerConfig
 	/** Argot's Protection config */
 	public static final String PROTECT_FILE = "config/protection.properties";
 
+    public static final int PROTECT_TITLE_COLOR = 0;
+
+    public static final String PROTECT_SERVER_TITLE = null;
+
+    public static final int PROTECT_TITLE_Y = 0;
+
+    public static final int PROTECT_TITLE_X = 0;
+
+    public static final int PROTECT_ONLINE_COLOR = 0;
+
+    public static final int PROTECT_PING_COLOR = 0;
+
+    public static final int PROTECT_ONLINE_PACKET_TIME = 0;
+
 	@ConfigField(config = "protection", fieldName = "EnableProtect", value = "false")
 	public static boolean PROTECT_ENABLE;
 	@ConfigField(config = "protection", value = "false")

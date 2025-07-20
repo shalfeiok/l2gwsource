@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="l2gw" default="dist" basedir=".">
-  <!-- Добавлен параметр для внешнего управления выходной директорией -->
-  <property name="dist.dir" location="${build}"/>
+  <!-- Исправлено: output directory синхронизирован с главным build.xml -->
+  <property name="dist.dir" location="../dist"/>
   
   <property name="build" location="build"/>
   <property name="build.dist" location="${build}/dist"/>
@@ -21,7 +21,6 @@
     <mkdir dir="${build.dist.game.data}"/>
   </target>
 
-  <!-- Измененный таргет dist -->
   <target name="dist" depends="init">
     <copy todir="${build.dist.sql}">
       <fileset dir="sql">
@@ -37,6 +36,5 @@
     </copy>
 
     <zip destfile="${dist.dir}/l2-dp.zip" basedir="${build.dist}" />
-    <echo message="DataPack distribution created at: ${dist.dir}/l2-dp.zip"/>
   </target>
 </project>
